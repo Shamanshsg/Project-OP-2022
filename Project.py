@@ -29,10 +29,15 @@ def fill (t):
                 enter_text = False
                 print('Введите Кол-во символов')
                 item = int(input())
-                ls = len(string)
-                lk = len(key)
                 for i in range (0, len(string), item):
                     stringm.append(string[i:i+item])
+                return stringm
+            case "3":
+                stringm = []
+                print('Введите строку')
+                string = input()
+                enter_text = False
+                stringm = string.split()
                 return stringm
                 
 
@@ -47,7 +52,7 @@ def check ():
         return True
 
 
-def Permutation_of_letters (s, k):
+def Encryption (s, k):
     if (len(s) % len(k) != 0):
         if (isinstance(s,str)):
             s = s + "\0"*(len(k) - (len(s) % len(k)))
@@ -66,6 +71,9 @@ def Permutation_of_letters (s, k):
 def prt (str):
     print("".join(str))
 
+def prt_word (str):
+    print(" ".join(str))
+
 print('Шифровать - 1')
 print('Разшифровать - 2')
 s = int(input())
@@ -78,16 +86,18 @@ match s:
         match cs:
             case "1":
                 fill(cs)
-                str2 = Permutation_of_letters(string, key)
+                str2 = Encryption(string, key)
                 prt(str2)
 
 
             case "2":
                 strr = fill(cs)
-                str2 = Permutation_of_letters(strr, key)
+                str2 = Encryption(strr, key)
                 prt(str2)
             case "3":
-                print(1)
+                strr = fill(cs)
+                str2 = Encryption(strr, key)
+                prt_word(str2)
     case 2:
         print('По буквам - 1')
         print('По группе букв - 2')
