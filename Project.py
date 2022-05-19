@@ -3,25 +3,25 @@ class RepeatException(Exception):
 
 
 key = []
-string = "\0"
 
 def fill (t):
-    global string
     global key
     enter_text = True
     enter = False
     while(not enter):
-        ls = len(string)
-        lk = len(key)
         print('Введите ключ')
         key = input().split()
         enter = check()
     if (enter_text):
         match t:
             case "1": 
+                stringm = []
                 print('Введите строку')
                 string = input()
+                for i in string:
+                    stringm.append(i)
                 enter_text = False
+                return stringm
             case "2":
                 stringm = []
                 print('Введите строку')
@@ -54,11 +54,8 @@ def check ():
 
 def Encryption (s, k):
     if (len(s) % len(k) != 0):
-        if (isinstance(s,str)):
-            s = s + "\0"*(len(k) - (len(s) % len(k)))
-        if (isinstance(s,list)):
-            for i in range (len(k) - (len(s) % len(k))):
-                s.append("\0")
+        for i in range (len(k) - (len(s) % len(k))):
+            s.append("\0")
     print(s)
     str_new = [0]*len(s)
     p = 0
@@ -67,6 +64,29 @@ def Encryption (s, k):
         if ((i+1)%len(k) == 0):
             p += len(k)
     return str_new
+
+def reverse_key (k):
+    rk = [0]*len(k)
+    for i in range (len(k)):
+        rk[int(k[i])] = i
+    print(rk)
+    return rk
+
+def full_str (s, k):
+    p = True
+    n = len(k) - (len(s)%len(k))
+    new_str = ["0"]*(len(s)+n)
+    for i in range (n):
+        a = int(k[-i-1])+(len(k)*(len(s)//len(k)))
+        new_str[int(k[-i-1])+(len(k)*(len(s)//len(k)))] = "\0"
+    for item in s:
+        p = True
+        for i in range(len(new_str)):
+            if (new_str[i] == "0" and p):
+                new_str[i] = item
+                p = False
+    return new_str
+
 
 def prt (str):
     print("".join(str))
@@ -85,8 +105,8 @@ match s:
         cs = input()
         match cs:
             case "1":
-                fill(cs)
-                str2 = Encryption(string, key)
+                strr = fill(cs)
+                str2 = Encryption(strr, key)
                 prt(str2)
 
 
@@ -105,11 +125,23 @@ match s:
         cs = input()
         match cs:
             case "1":
-                print(1)
+                strr = fill(cs)
+                new_string = full_str(strr, key)
+                rekey = reverse_key(key)
+                str2 = Encryption(new_string, rekey)
+                prt(str2)
 
             case "2":
-                print(1)
+                strr = fill(cs)
+                new_string = full_str(strr, key)
+                rekey = reverse_key(key)
+                str2 = Encryption(new_string, rekey)
+                prt(str2)
 
             case "3":
-                print(1)
+                strr = fill(cs)
+                new_string = full_str(strr, key)
+                rekey = reverse_key(key)
+                str2 = Encryption(new_string, rekey)
+                prt_word(str2)
 
