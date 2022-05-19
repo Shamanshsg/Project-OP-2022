@@ -3,9 +3,10 @@ class RepeatException(Exception):
 
 
 key = []
-
+string = ""
 def fill (t):
     global key
+    global string
     enter_text = True
     enter = False
     while(not enter):
@@ -29,8 +30,11 @@ def fill (t):
                 enter_text = False
                 print('Введите Кол-во символов')
                 item = int(input())
-                for i in range (0, len(string), item):
-                    stringm.append(string[i:i+item])
+                if (len(string)%item == 0):
+                    for i in range (0, len(string), item):
+                        stringm.append(string[i:i+item])
+                else:
+                    stringm = block(string, key, item)
                 return stringm
             case "3":
                 stringm = []
@@ -87,6 +91,24 @@ def full_str (s, k):
                 p = False
     return new_str
 
+
+def block (s, k, n):
+    p = 0
+    i2 = 0
+    a = len(s) % n
+    b = len(s) // n
+    c = (((len(s) // n) + 1) // len(k))
+    sm = ['']*(b+1)
+    for i in range (0, len(s), n):
+        if(p == (b - 1)):
+            sm[p] = s[i2:i2+(len(s)%n)]
+            i2-=n - 1
+        else:
+            sm[p] = s[i2:i2+n]
+        p+=1
+        i2+=2
+    print(sm)
+    return sm
 
 def prt (str):
     print("".join(str))
