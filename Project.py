@@ -1,12 +1,11 @@
-class RepeatException(Exception):
-    enter = False
-
 
 key = []
 string = ""
+itemm = 0
 def fill (t, t1):
     global key
     global string
+    global itemm
     enter_text = True
     enter = False
     while(not enter):
@@ -29,17 +28,17 @@ def fill (t, t1):
                 string = input()
                 enter_text = False
                 print('Введите Кол-во символов')
-                item = int(input())
-                if (t1 == 1):
-                    for i in range (0, len(string), item):
-                        stringm.append(string[i:i+item])
-                else:
-                    if (len(string)%item == 0):
-                        for i in range (0, len(string), item):
-                            stringm.append(string[i:i+item])
-                    else:
-                        stringm = block(string, key, item)
-                print(stringm)
+                itemm = int(input())
+                # if (t1 == 1):
+                for i in range (0, len(string), itemm):
+                    stringm.append(string[i:i+itemm])
+                # else:
+                #     if (len(string)%itemm == 0):
+                        # for i in range (0, len(string), itemm):
+                        #     stringm.append(string[i:i+itemm])
+                    # else:
+                    #     stringm = block(string, key, itemm)
+                # print(stringm)
                 return stringm
             case "3":
                 stringm = []
@@ -94,32 +93,40 @@ def full_str (s, k):
             if (new_str[i] == "0" and p):
                 new_str[i] = item
                 p = False
-    print(new_str)
+    # print(new_str)
     return new_str
 
 
-def block (s, k, n):
-    p = 0
-    i2 = 0
-    a = len(s) % n
-    b = (len(s) // n)
-    c = (((len(s) // n) + 1) // len(k))
-    sm = ['']*(b+1)
-    for i in range (0, len(s), n):
-        if(p == (b - 1)):
-            sm[p] = s[i2:i2+(len(s)%n)]
-            i2-= n - 1
-        else:
-            sm[p] = s[i2:i2+n]
-        p+=1
-        i2+=n
-    print(sm)
-    return sm
+# def block (s, k, n):
+#     p = 0
+#     i2 = 0
+#     a = len(s) % n
+#     b = (len(s) // n)
+#     c = (((len(s) // n) + 1) // len(k))
+#     sm = ['']*(b+1)
+#     for i in range (0, len(s), n):
+#         if(p == (b - 1)):
+#             sm[p] = s[i2:i2+(len(s)%n)]
+#             i2-= n - 1
+#         else:
+#             sm[p] = s[i2:i2+n]
+#         p+=1
+#         i2+=n
+#     print(sm)
+#     return sm
+
+def prt_2 (str):
+    print("Результат:")
+    s = "".join(str)
+    print(s.replace('ʗ', ""))
 
 def prt (str):
+    print("Результат:")
     print("".join(str))
 
+
 def prt_word (str):
+    print("Результат:")
     print(" ".join(str))
 
 print('Шифровать - 1')
@@ -140,6 +147,7 @@ match s:
 
             case "2":
                 strr = fill(cs, s)
+                strr[-1] = strr[-1]+("ʗ"*(itemm - len(string)%itemm))
                 str2 = Encryption(strr, key)
                 prt(str2)
             case "3":
@@ -164,7 +172,7 @@ match s:
                 new_string = full_str(strr, key)
                 rekey = reverse_key(key)
                 str2 = Encryption(new_string, rekey)
-                prt(str2)
+                prt_2(str2)
 
             case "3":
                 strr = fill(cs, s)
