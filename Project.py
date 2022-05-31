@@ -26,6 +26,7 @@ def fill (t, t1):
                 stringm = []
                 print('Введите строку')
                 string = input()
+                string = string.replace('\\x00', '\0')
                 enter_text = False
                 print('Введите Кол-во символов')
                 itemm = int(input())
@@ -118,11 +119,17 @@ def full_str (s, k):
 def prt_2 (str):
     print("Результат:")
     s = "".join(str)
-    print(s.replace('ʗ', ""))
+    print(s)
 
 def prt (str):
     print("Результат:")
     print("".join(str))
+
+def prt_block (str):
+    print("Результат:")
+    for i in range (str.count("\0")):
+        str.remove("\0")
+    print(repr("".join(str)))
 
 
 def prt_word (str):
@@ -147,9 +154,9 @@ match s:
 
             case "2":
                 strr = fill(cs, s)
-                strr[-1] = strr[-1]+("ʗ"*(itemm - len(string)%itemm))
+                strr[-1] = strr[-1]+("\0"*(itemm - len(string)%itemm))
                 str2 = Encryption(strr, key)
-                prt(str2)
+                prt_block(str2)
             case "3":
                 strr = fill(cs, s)
                 str2 = Encryption(strr, key)
